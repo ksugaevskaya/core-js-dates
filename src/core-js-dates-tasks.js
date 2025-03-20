@@ -17,8 +17,8 @@
  * '01 Jan 1970 00:00:00 UTC' => 0
  * '04 Dec 1995 00:12:00 UTC' => 818035920000
  */
-function dateToTimestamp(/* date */) {
-  throw new Error('Not implemented');
+function dateToTimestamp(date) {
+  return Date.parse(date);
 }
 
 /**
@@ -31,8 +31,12 @@ function dateToTimestamp(/* date */) {
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  const hours = date.getHours().toString();
+  const minutes = date.getMinutes().toString();
+  const seconds = date.getSeconds().toString();
+  const result = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+  return result;
 }
 
 /**
@@ -46,8 +50,28 @@ function getTime(/* date */) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const dateObject = new Date(date);
+  const dayInNumber = dateObject.getUTCDay();
+  if (dayInNumber === 0) {
+    return 'Sunday';
+  }
+  if (dayInNumber === 1) {
+    return 'Monday';
+  }
+  if (dayInNumber === 2) {
+    return 'Tuesday';
+  }
+  if (dayInNumber === 3) {
+    return 'Wednesday';
+  }
+  if (dayInNumber === 4) {
+    return 'Thursday';
+  }
+  if (dayInNumber === 5) {
+    return 'Friday';
+  }
+  return 'Saturday';
 }
 
 /**
@@ -76,8 +100,48 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  if (month === 1) {
+    return 31;
+  }
+  if (month === 3) {
+    return 31;
+  }
+  if (month === 4) {
+    return 30;
+  }
+  if (month === 5) {
+    return 31;
+  }
+  if (month === 6) {
+    return 30;
+  }
+  if (month === 7) {
+    return 31;
+  }
+  if (month === 8) {
+    return 31;
+  }
+  if (month === 9) {
+    return 30;
+  }
+  if (month === 10) {
+    return 31;
+  }
+  if (month === 11) {
+    return 30;
+  }
+  if (month === 12) {
+    return 31;
+  }
+
+  if (month === 2) {
+    if (year % 4 === 0) {
+      return 29;
+    }
+    return 28;
+  }
+  return 0;
 }
 
 /**
@@ -127,8 +191,18 @@ function isDateInPeriod(/* date, period */) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
+function formatDate(date) {
+  const newObject = new Date(date);
+  const month = newObject.getUTCMonth() + 1;
+  const day = newObject.getUTCDate();
+  const year = newObject.getFullYear();
+  const hours = newObject.getUTCHours();
+  const hours12 = hours > 12 ? hours - 12 : hours;
+  const amPm = hours >= 12 ? 'PM' : 'AM';
+  const minutes = newObject.getUTCMinutes().toString();
+  const seconds = newObject.getUTCSeconds().toString();
+  const result = `${month}/${day}/${year}, ${hours12}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')} ${amPm}`;
+  return result;
 }
 
 /**
@@ -228,8 +302,12 @@ function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = date.getFullYear();
+  if (year % 4 === 0) {
+    return true;
+  }
+  return false;
 }
 
 module.exports = {
