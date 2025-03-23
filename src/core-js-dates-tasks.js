@@ -292,7 +292,7 @@ function getWeekNumberByDate(date) {
 function getNextFridayThe13th(date) {
   const currentDate = new Date(date);
 
-  while (true) {
+  for (;;) {
     currentDate.setDate(currentDate.getDate() + 1);
     if (currentDate.getDate() === 13 && currentDate.getDay() === 5) {
       return currentDate;
