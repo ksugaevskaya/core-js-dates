@@ -85,8 +85,16 @@ function getDayName(date) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const day = date.getUTCDay();
+  let dayTillFr = 5 - day;
+
+  if (dayTillFr <= 0) {
+    dayTillFr += 7;
+  }
+
+  date.setUTCDate(date.getUTCDate() + dayTillFr);
+  return date;
 }
 
 /**
@@ -231,8 +239,21 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  const daysInMonth = getCountDaysInMonth(month, year);
+
+  let weekendCount = 0;
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const currentDate = new Date(year, month - 1, day);
+    const dayOfWeek = currentDate.getDay();
+
+    if (dayOfWeek === 6 || dayOfWeek === 0) {
+      weekendCount += 1;
+    }
+  }
+
+  return weekendCount;
 }
 
 /**
