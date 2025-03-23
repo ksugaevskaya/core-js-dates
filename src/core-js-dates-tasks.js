@@ -351,15 +351,15 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
 
   while (currentDate <= endDate) {
     for (let i = 0; i < countWorkDays && currentDate <= endDate; i += 1) {
-      currentDate.setDate(currentDate.getDate() + 1);
-      const day = currentDate.getDate().toString().padStart(2, '0');
-      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-      const year = currentDate.getFullYear();
+      const day = currentDate.getUTCDate().toString().padStart(2, '0');
+      const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, '0');
+      const year = currentDate.getUTCFullYear();
       schedule.push(`${day}-${month}-${year}`);
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1);
     }
 
     for (let i = 0; i < countOffDays && currentDate <= endDate; i += 1) {
-      currentDate.setDate(currentDate.getDate() + 1);
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1);
     }
   }
 
